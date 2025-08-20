@@ -1,74 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="color-scheme" content="light dark">
+  <head>
+    <meta name="color-scheme" content="light dark" />
     <script>
-        (function () {
-        var KEY = 'theme';
-        var root = document.documentElement;
-        var theme = null;
+      (function () {
+        let KEY = "theme";
+        let root = document.documentElement;
+        let theme = null;
 
         try {
-            theme = localStorage.getItem(KEY);
-        } catch (e) { /* xd */ }
-
-        if (!theme) {
-            try {
-            theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark' : 'light';
-            } catch (e) {
-            theme = 'light';
-            }
+          theme = localStorage.getItem(KEY);
+        } catch (e) {
+          /* xd */
         }
 
-        root.setAttribute('data-theme', theme);
-        try { root.style.colorScheme = theme; } catch (e) {}
-        })();
+        if (!theme) {
+          try {
+            theme =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          } catch (e) {
+            theme = "light";
+          }
+        }
+
+        root.setAttribute("data-theme", theme);
+        try {
+          root.style.colorScheme = theme;
+        } catch (e) {}
+      })();
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taller HTML, CSS, JS</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <main class="deck" role="presentacion" aria-label="Presentación de diapositivas">
-        <section class="slides" id="slides">
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main
+      class="deck"
+      role="presentacion"
+      aria-label="Presentación de diapositivas"
+    >
+      <section class="slides" id="slides">
         <article class="slide active" data-title="Portada">
-            <div class="card">
-                <h2>Bienvenidos al Taller</h2>
-                <p>Aprenderemos sobre HTML, CSS y JavaScript.</p>
-            </div>
+          <div class="card">
+            <h2>Bienvenidos al Taller</h2>
+            <p>Aprenderemos sobre HTML, CSS y JavaScript.</p>
+          </div>
         </article>
 
-        <!-- Mas tarjetas -->
-    </section>
+        <article class="slide" data-title="¿Qué es HTML?">
+          <div class="card">
+            <h2>¿Qué es HTML?</h2>
+            <p>HTML (HyperText Markup Language) es el lenguaje estándar para crear páginas web.</p>
+            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fes.wikipedia.org%2Fwiki%2FArchivo%3AHTML5_logo_and_wordmark.svg&psig=AOvVaw1XSfQvepc9OU0uiUerwAXg&ust=1755795879585000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCICv3r_vmY8DFQAAAAAdAAAAABAE" alt="Logo de HTML" style="max-width:120px;">
+            <pre><code>&lt;h1&gt;Hola Mundo&lt;/h1&gt;</code></pre>
+          </div>
+        </article>
 
-    <!-- HUD -->
-     <div class="hud" aria-hidden="true">
+        <article class="slide" data-title="Estructura básica de HTML">
+          <div class="card">
+            <h2>Estructura básica de HTML</h2>
+            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FStructure-of-an-HTML5-Web-Page_fig3_323869270&psig=AOvVaw1hMGUJM7y3NzDW_m2mxNGe&ust=1755795914070000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCJCL1M_vmY8DFQAAAAAdAAAAABAE" alt="Estructura HTML" style="max-width:220px;">
+            <pre><code>&lt;!DOCTYPE html&gt;
+        &lt;html&gt;
+          &lt;head&gt;
+            &lt;title&gt;Mi página&lt;/title&gt;
+          &lt;/head&gt;
+          &lt;body&gt;
+            &lt;h1&gt;Bienvenido&lt;/h1&gt;
+          &lt;/body&gt;
+        &lt;/html&gt;
+        </code></pre>
+          </div>
+        </article>
+
+        <article class="slide" data-title="¿Qué es CSS?">
+          <div class="card">
+            <h2>¿Qué es CSS?</h2>
+            <p>CSS (Cascading Style Sheets) se usa para dar estilo y diseño a las páginas web.</p>
+            <img src="img/css-logo.png" alt="Logo de CSS" style="max-width:120px;">
+            <pre><code>h1 {
+          color: blue;
+          font-size: 2em;
+        }</code></pre>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Ejemplo de CSS">
+          <div class="card">
+            <h2>Ejemplo de CSS</h2>
+            <img src="img/css-example.png" alt="Ejemplo CSS" style="max-width:220px;">
+            <pre><code>&lt;style&gt;
+          p { color: green; }
+        &lt;/style&gt;
+        &lt;p&gt;Texto en verde&lt;/p&gt;
+        </code></pre>
+          </div>
+        </article>
+
+        <article class="slide" data-title="¿Qué es JavaScript?">
+          <div class="card">
+            <h2>¿Qué es JavaScript?</h2>
+            <p>JavaScript permite agregar interactividad y dinamismo a las páginas web.</p>
+            <img src="img/js-logo.png" alt="Logo de JavaScript" style="max-width:120px;">
+            <pre><code>&lt;script&gt;
+          alert('¡Hola desde JavaScript!');
+        &lt;/script&gt;
+        </code></pre>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Ejemplo de JavaScript">
+          <div class="card">
+            <h2>Ejemplo de JavaScript</h2>
+            <img src="img/js-example.png" alt="Ejemplo JavaScript" style="max-width:220px;">
+            <pre><code>&lt;button onclick="alert('¡Hola!')"&gt;Haz clic&lt;/button&gt;
+        </code></pre>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Resumen">
+          <div class="card">
+            <h2>Resumen</h2>
+            <ul>
+              <li><strong>HTML:</strong> estructura</li>
+              <li><strong>CSS:</strong> estilos</li>
+              <li><strong>JavaScript:</strong> interactividad</li>
+            </ul>
+            <img src="img/web-stack.png" alt="Stack web" style="max-width:220px;">
+          </div>
+        </article>
+         
+      </section>
+
+      <!-- HUD -->
+      <div class="hud" aria-hidden="true">
         <div class="controls">
-            <button id="prev" title="Anterior (←)">
-                ◀
-            </button>
-            <button id="next" title="Siguiente (→)">
-                ▶
-            </button>
-            <button id="toggleTheme" title="Cambiar tema (T)">
-                🔆
-            </button>
-            <!-- 🔆🌙 -->
-            <button id="toggleIndex" title="Indice (O)">
-                Indice
-            </button>
+          <button id="prev" title="Anterior (←)">◀</button>
+          <button id="next" title="Siguiente (→)">▶</button>
+          <button id="toggleTheme" title="Cambiar tema (T)">🔆</button>
+          <!-- 🔆🌙 -->
+          <button id="toggleIndex" title="Indice (O)">Indice</button>
         </div>
         <div class="progress" aria-label="Progreso">
-            <div class="bar" id="bar"></div>
+          <div class="bar" id="bar"></div>
         </div>
         <div class="controls">
-            <span class="kbd" title="Diapositiva"><span id="pos">1</span><span id="total">1</span></span>
+          <span class="kbd" title="Diapositiva"
+            ><span id="pos">1</span><span id="total">1</span></span
+          >
         </div>
-     </div>
+      </div>
     </main>
 
     <script src="js/app.js"></script>
-</body>
+  </body>
 </html>

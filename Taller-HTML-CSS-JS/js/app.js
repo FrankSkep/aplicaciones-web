@@ -43,4 +43,44 @@ class ThemeManager {
 // Inicializar el gestor de temas
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
+
+
+    (function () {
+        // Seleccionar cada diapositiva, no el contenedor
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const overlay = document.querySelector('#indice');
+        const nextBtn = document.querySelector('#next');
+        const prevBtn = document.querySelector('#prev');
+        const bar = document.querySelector('#bar');
+        const posEl = document.querySelector('#pos');
+        const totalEl = document.querySelector('#total');
+
+        let i = 0;
+        // Corregir clamp
+        const clamp = (num, min, max) => Math.max(min, Math.min(num, max));
+
+        function setActive(idx) {
+            i = clamp(idx, 0, slides.length - 1);
+            slides.forEach((s, k) => s.classList.toggle('active', k === i));
+            posEl.textContent = i + 1;
+            totalEl.textContent = slides.length;
+            bar.style.width = (((i + 1) / slides.length) * 100).toFixed(2) + '%';
+
+            // Proteger si no existe #indice
+            if (overlay) {
+                overlay.hidden = true;
+                overlay.classList.remove('active');
+            }
+        }
+
+        function next() { setActive(i + 1); }
+        function prev() { setActive(i - 1); }
+
+        nextBtn.addEventListener('click', next);
+        prevBtn.addEventListener('click', prev);
+
+        // Inicializar estado correcto
+        setActive(0);
+    })();
+
 });
