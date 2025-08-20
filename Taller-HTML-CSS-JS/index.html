@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller HTML, CSS, JS</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <main class="deck" role="presentacion" aria-label="Presentación de diapositivas">
+        <section class="slides" id="slides">
+        <article class="slide active" data-title="Portada">
+            <div class="card">
+                <h2>Bienvenidos al Taller</h2>
+                <p>Aprenderemos sobre HTML, CSS y JavaScript.</p>
+            </div>
+        </article>
+
+        <!-- Mas tarjetas -->
+    </section>
+
+    <!-- HUD -->
+     <div class="hud" aria-hidden="true">
+        <div class="controls">
+            <button id="prev" title="Anterior (←)">
+                &#8592;
+            </button>
+            <button id="next" title="Siguiente (→)">
+                &#8594;
+            </button>
+            <button id="toggleTheme" title="Cambiar tema (T)">
+                &#8596;
+            </button>
+            <button id="toggleIndex" title="Indice (O)">
+                &#x26F6;
+            </button>
+        </div>
+        <div class="progress" aria-label="Progreso">
+            <div class="bar" id="bar"></div>
+        </div>
+        <div class="controls">
+            <span class="kbd" title="Diapositiva"><span id="pos">1</span><span id="total">1</span></span>
+        </div>
+     </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

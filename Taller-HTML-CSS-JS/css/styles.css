@@ -1,0 +1,187 @@
+:root {
+    /* Tema azul oscuro */
+    --bg: #0a1324;                 /* fallback */
+    --bg-1: #071022;               /* centro oscuro */
+    --bg-2: #0b1b3a;               /* azul profundo */
+    --surface: #152a55;            /* base tarjeta/controles */
+    --surface-contrast: color-mix(in oklab, var(--surface) 88%, white 12%);
+
+    --muted: #e8ecf8;
+    --text: #c9d1e8;
+
+    --primary: #4f7df2;
+    --accent: #22d3ee;
+
+    --danger: #ab2b42;
+    --success: #4caf50;
+    --code-bg: #0f1b35;
+    --shadow: 0 20px 30px rgba(0, 10, 30, 0.45);
+
+    --radius-card: 18px;
+    --radius-ui: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0a1324;
+        --bg-1: #071022;
+        --bg-2: #0b1b3a;
+        --surface: #152a55;
+        --surface-contrast: color-mix(in oklab, var(--surface) 88%, white 12%);
+
+        --muted: #e8ecf8;
+        --text: #c9d1e8;
+
+        --primary: #4f7df2;
+        --accent: #22d3ee;
+
+        --code-bg: #0f1b35;
+        --shadow: 0 20px 30px rgba(0, 10, 30, 0.45);
+    }
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    font: 16px/1.5 system-ui, -linux-droid-sans, Segoe UI, Roboto, Ubuntu, Canterell, Noto Sans;
+    color: var(--text);
+    background:
+        radial-gradient(1200px 800px at 100% 0%, var(--bg-2) 0%, var(--bg-1) 70%),
+        var(--bg);
+}
+.deck {
+    position: relative;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slides {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateX(10%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    display: grid;
+    place-items: center;
+    padding: clamp(16px, 3vw, 48px);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ==== Cards (Diapositivas) */
+
+.card {
+    padding: 5%;
+    width: min(1100px, 92vw);
+    background: var(--surface-contrast);
+    color: var(--muted);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    border: 1px solid color-mix(in oklab, var(--surface-contrast) 85%, white 15%);
+}
+
+/* ====== UI: HUD ====== */
+.hud {
+    position: fixed;
+    inset: auto 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 14px;
+    /* Igual fondo que la tarjeta */
+    background: var(--surface-contrast);
+    border-top-left-radius: var(--radius-ui);
+    border-top-right-radius: var(--radius-ui);
+    border-top: 1px solid color-mix(in oklab, var(--surface-contrast) 85%, white 15%);
+    pointer-events: none;
+}
+
+.hud>* {
+    pointer-events: auto;
+}
+
+.progress {
+    flex: 1;
+    height: 6px;
+    background: color-mix(in oklab, var(--surface-contrast) 65%, black 12%);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 12px;
+}
+.bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    box-shadow: 0 0 18px color-mix(in oklab, var(--primary) 70%, white 10%);
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+}
+
+button {
+    appearance: none;
+    border: 1px solid color-mix(in oklab, var(--surface-contrast) 75%, white 16%);
+    background: linear-gradient(180deg,
+            var(--surface-contrast),
+            color-mix(in oklab, var(--surface-contrast) 90%, black 10%));
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: var(--radius-ui);
+    cursor: pointer;
+    font-weight: 600;
+}
+button:hover {
+    border-color: color-mix(in oklab, var(--primary) 35%, white 20%);
+}
+
+.kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--radius-ui);
+    border: 1px solid color-mix(in oklab, var(--surface-contrast) 75%, white 16%);
+    background: linear-gradient(180deg,
+            var(--surface-contrast),
+            color-mix(in oklab, var(--surface-contrast) 90%, black 8%));
+    font-variant-numeric: tabular-nums;
+}
+
+/* === Tipografia y grid de apoyo === */
+
+h1, h2 {
+    margin: 0 0 3rem 0;
+}
+
+h1 {
+    font-size: clamp(22px, 3.2vw, 36px);
+}
+
+p {
+    color: var(--muted);
+    margin: 0.25rem 0 0.75rem 0;
+}
+
+.grid {
+    display: grid;
+    gap: 16px;
+}
