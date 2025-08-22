@@ -228,3 +228,82 @@ a:focus-visible {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* === Responsive Mobile Styles === */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .card {
+        width: 95vw;
+        padding: 4%;
+        border-radius: var(--radius-ui);
+    }
+
+    .slide {
+        padding: clamp(12px, 2vw, 24px);
+    }
+
+    h1 {
+        font-size: clamp(18px, 4vw, 28px);
+        margin: 0 0 2rem 0;
+    }
+
+    h2 {
+        font-size: clamp(16px, 3.5vw, 24px);
+        margin: 0 0 1.5rem 0;
+    }
+
+    .hud {
+        padding: 6px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .controls {
+        gap: 6px;
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .progress {
+        order: 1;
+        margin: 0;
+        min-width: 100%;
+    }
+
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .kbd {
+        padding: 0.15rem 0.35rem;
+        font-size: 12px;
+        min-width: 24px;
+    }
+
+    .grid {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 98vw;
+        padding: 3%;
+    }
+
+    .controls {
+        gap: 4px;
+    }
+
+    button {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}

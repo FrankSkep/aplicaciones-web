@@ -1,117 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta name="color-scheme" content="light dark" />
-    <script>
-      (function () {
-        let KEY = "theme";
-        let root = document.documentElement;
-        let theme = null;
-
+<head>
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (function () {
+      let KEY = "theme";
+      let root = document.documentElement;
+      let theme = null;
+      try {
+        theme = localStorage.getItem(KEY);
+      } catch (e) {
+        /* xd */
+      }
+      if (!theme) {
         try {
-          theme = localStorage.getItem(KEY);
+          theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         } catch (e) {
-          /* xd */
+          theme = "light";
         }
+      }
+      root.setAttribute("data-theme", theme);
+      try {
+        root.style.colorScheme = theme;
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller HTML, CSS, JS</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="sr-only" aria-live="polite" id="instructions">
+    Usa las flechas del teclado o los botones para navegar entre diapositivas. Presiona T para cambiar el tema.
+  </div>
+  <main class="deck" role="presentacion" aria-label="Presentación de diapositivas">
+    <section class="slides" id="slides" tabindex="0" role="group" aria-live="polite" aria-atomic="true">
+      <article class="slide active" data-title="Portada" role="tabpanel" aria-labelledby="slide-1-title">
+        <div class="card">
+          <h2 id="slide-1-title">Bienvenidos al Taller</h2>
+          <p>Aprenderemos sobre HTML, CSS y JavaScript, los pilares del desarrollo web.</p>
+          <p><strong>¡Prepárate para crear sitios web increíbles!</strong></p>
+        </div>
+      </article>
 
-        if (!theme) {
-          try {
-            theme =
-              window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
-          } catch (e) {
-            theme = "light";
-          }
-        }
+      <article class="slide" data-title="¿Qué es HTML?" role="tabpanel" aria-labelledby="slide-2-title">
+        <div class="card">
+          <h2 id="slide-2-title">¿Qué es HTML?</h2>
+          <p>HTML (HyperText Markup Language) es el lenguaje estándar para crear páginas web.</p>
+          <img src="static/html5.png" alt="Logotipo de HTML5 - Escudo naranja con el número 5" style="max-width: 120px" />
+          <p>Ejemplo básico:</p>
+          <pre><code>&lt;h1&gt;Hola Mundo&lt;/h1&gt;</code></pre>
+          <p><a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank">Más sobre HTML</a></p>
+        </div>
+      </article>
 
-        root.setAttribute("data-theme", theme);
-        try {
-          root.style.colorScheme = theme;
-        } catch (e) {}
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taller HTML, CSS, JS</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <div class="sr-only" aria-live="polite" id="instructions">
-      Usa las flechas del teclado o los botones para navegar entre diapositivas.
-      Presiona T para cambiar el tema.
-    </div>
-    <main
-      class="deck"
-      role="presentacion"
-      aria-label="Presentación de diapositivas"
-    >
-      <section
-        class="slides"
-        id="slides"
-        tabindex="0"
-        role="group"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <article
-          class="slide active"
-          data-title="Portada"
-          role="tabpanel"
-          aria-labelledby="slide-1-title"
-        >
-          <div class="card">
-            <h2 id="slide-1-title">Bienvenidos al Taller</h2>
-            <p>
-              Aprenderemos sobre HTML, CSS y JavaScript, los pilares del
-              desarrollo web.
-            </p>
-            <p><strong>¡Prepárate para crear sitios web increíbles!</strong></p>
-          </div>
-        </article>
-
-        <article
-          class="slide"
-          data-title="¿Qué es HTML?"
-          role="tabpanel"
-          aria-labelledby="slide-2-title"
-        >
-          <div class="card">
-            <h2 id="slide-2-title">¿Qué es HTML?</h2>
-            <p>
-              HTML (HyperText Markup Language) es el lenguaje estándar para
-              crear páginas web.
-            </p>
-            <img
-              src="static/html5.png"
-              alt="Logotipo de HTML5 - Escudo naranja con el número 5"
-              style="max-width: 120px"
-            />
-            <p>Ejemplo básico:</p>
-            <pre><code>&lt;h1&gt;Hola Mundo&lt;/h1&gt;</code></pre>
-            <p>
-              <a
-                href="https://developer.mozilla.org/es/docs/Web/HTML"
-                target="_blank"
-                >Más sobre HTML</a
-              >
-            </p>
-          </div>
-        </article>
-
-        <article class="slide" data-title="Estructura básica de HTML">
-          <div class="card">
-            <h2>Estructura básica de HTML</h2>
-            <p>Una página HTML típica incluye:</p>
-            <ul>
-              <li>Declaración <code>&lt;!DOCTYPE&gt;</code></li>
-              <li>
-                Etiquetas <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> y
-                <code>&lt;body&gt;</code>
-              </li>
-            </ul>
-            <pre><code>&lt;!DOCTYPE html&gt;
+      <article class="slide" data-title="Estructura básica de HTML">
+        <div class="card">
+          <h2>Estructura básica de HTML</h2>
+          <p>Una página HTML típica incluye:</p>
+          <ul>
+            <li>Declaración <code>&lt;!DOCTYPE&gt;</code></li>
+            <li>Etiquetas <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> y <code>&lt;body&gt;</code></li>
+          </ul>
+          <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Mi página&lt;/title&gt;
@@ -120,146 +72,89 @@
     &lt;h1&gt;Bienvenido&lt;/h1&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-          </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="slide" data-title="¿Qué es CSS?">
-          <div class="card">
-            <h2>¿Qué es CSS?</h2>
-            <p>
-              CSS (Cascading Style Sheets) se usa para dar estilo y diseño a las
-              páginas web.
-            </p>
-            <img
-              src="static/css3.png"
-              alt="Logotipo de CSS3 - Escudo azul con las letras CSS"
-              style="max-width: 120px"
-            />
-            <p>Ejemplo básico:</p>
-            <pre><code>h1 {
+      <article class="slide" data-title="¿Qué es CSS?">
+        <div class="card">
+          <h2>¿Qué es CSS?</h2>
+          <p>CSS (Cascading Style Sheets) se usa para dar estilo y diseño a las páginas web.</p>
+          <img src="static/css3.png" alt="Logotipo de CSS3 - Escudo azul con las letras CSS" style="max-width: 120px" />
+          <p>Ejemplo básico:</p>
+          <pre><code>h1 {
   color: blue;
   font-size: 2em;
 }</code></pre>
-            <p>
-              <a
-                href="https://developer.mozilla.org/es/docs/Web/CSS"
-                target="_blank"
-                >Más sobre CSS</a
-              >
-            </p>
-          </div>
-        </article>
+          <p><a href="https://developer.mozilla.org/es/docs/Web/CSS" target="_blank">Más sobre CSS</a></p>
+        </div>
+      </article>
 
-        <article class="slide" data-title="Ejemplo de CSS">
-          <div class="card">
-            <h2>Ejemplo de CSS</h2>
-            <p>Estilo embebido:</p>
-            <pre><code>&lt;style&gt;
+      <article class="slide" data-title="Ejemplo de CSS">
+        <div class="card">
+          <h2>Ejemplo de CSS</h2>
+          <p>Estilo embebido:</p>
+          <pre><code>&lt;style&gt;
 p { color: green; }
 &lt;/style&gt;
 &lt;p&gt;Texto en verde&lt;/p&gt;</code></pre>
-          </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="slide" data-title="¿Qué es JavaScript?">
-          <div class="card">
-            <h2>¿Qué es JavaScript?</h2>
-            <p>
-              JavaScript permite agregar interactividad y dinamismo a las
-              páginas web.
-            </p>
-            <img
-              src="static/js.png"
-              alt="Logotipo de JavaScript - Cuadrado amarillo con las letras JS"
-              style="max-width: 120px"
-            />
-            <p>Ejemplo básico:</p>
-            <pre><code>&lt;script&gt;
+      <article class="slide" data-title="¿Qué es JavaScript?">
+        <div class="card">
+          <h2>¿Qué es JavaScript?</h2>
+          <p>JavaScript permite agregar interactividad y dinamismo a las páginas web.</p>
+          <img src="static/js.png" alt="Logotipo de JavaScript - Cuadrado amarillo con las letras JS" style="max-width: 120px" />
+          <p>Ejemplo básico:</p>
+          <pre><code>&lt;script&gt;
 alert('¡Hola desde JavaScript!');
 &lt;/script&gt;</code></pre>
-            <p>
-              <a
-                href="https://developer.mozilla.org/es/docs/Web/JavaScript"
-                target="_blank"
-                >Más sobre JavaScript</a
-              >
-            </p>
-          </div>
-        </article>
-
-        <article class="slide" data-title="Ejemplo de JavaScript">
-          <div class="card">
-            <h2>Ejemplo de JavaScript</h2>
-            <p>Botón interactivo:</p>
-            <pre><code>&lt;button onclick="alert('¡Hola!')"&gt;Haz clic&lt;/button&gt;</code></pre>
-          </div>
-        </article>
-
-        <article class="slide" data-title="Resumen">
-          <div class="card">
-            <h2>Resumen</h2>
-            <ul>
-              <li><strong>HTML:</strong> estructura</li>
-              <li><strong>CSS:</strong> estilos</li>
-              <li><strong>JavaScript:</strong> interactividad</li>
-            </ul>
-            <img
-              src="static/htmlcssjs.png"
-              alt="Combinación de los logotipos de HTML5, CSS3 y JavaScript representando el stack de desarrollo web frontend"
-              style="max-width: 220px"
-            />
-            <p>¡Gracias por participar!</p>
-          </div>
-        </article>
-      </section>
-
-      <!-- HUD -->
-      <div class="hud" role="toolbar" aria-label="Controles de presentación">
-        <div class="controls">
-          <button
-            id="prev"
-            title="Diapositiva anterior"
-            aria-label="Ir a la diapositiva anterior"
-            aria-keyshortcuts="ArrowLeft"
-          >
-            ◀
-          </button>
-          <button
-            id="next"
-            title="Siguiente diapositiva"
-            aria-label="Ir a la siguiente diapositiva"
-            aria-keyshortcuts="ArrowRight"
-          >
-            ▶
-          </button>
-          <button
-            id="toggleTheme"
-            title="Alternar tema claro/oscuro"
-            aria-label="Cambiar entre tema claro y oscuro"
-            aria-keyshortcuts="t"
-          >
-            <span aria-hidden="true">🔆</span>
-          </button>
+          <p><a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank">Más sobre JavaScript</a></p>
         </div>
-        <div
-          class="progress"
-          role="progressbar"
-          aria-label="Progreso de la presentación"
-          aria-valuemin="1"
-          aria-valuemax="8"
-          aria-valuenow="1"
-        >
-          <div class="bar" id="bar"></div>
+      </article>
+
+      <article class="slide" data-title="Ejemplo de JavaScript">
+        <div class="card">
+          <h2>Ejemplo de JavaScript</h2>
+          <p>Botón interactivo:</p>
+          <pre><code>&lt;button onclick="alert('¡Hola!')"&gt;Haz clic&lt;/button&gt;</code></pre>
         </div>
-        <div class="controls">
-          <span class="kbd" aria-label="Posición actual en la presentación">
-            Diapositiva <span id="pos" aria-live="polite">1</span> de
-            <span id="total">8</span>
-          </span>
+      </article>
+
+      <article class="slide" data-title="Resumen">
+        <div class="card">
+          <h2>Resumen</h2>
+          <ul>
+            <li><strong>HTML:</strong> estructura</li>
+            <li><strong>CSS:</strong> estilos</li>
+            <li><strong>JavaScript:</strong> interactividad</li>
+          </ul>
+          <img src="static/htmlcssjs.png" alt="Combinación de los logotipos de HTML5, CSS3 y JavaScript representando el stack de desarrollo web frontend" style="max-width: 220px" />
+          <p>¡Gracias por participar!</p>
         </div>
+      </article>
+    </section>
+
+    <!-- HUD -->
+    <div class="hud" role="toolbar" aria-label="Controles de presentación">
+      <div class="controls">
+        <button id="prev" title="Diapositiva anterior" aria-label="Ir a la diapositiva anterior" aria-keyshortcuts="ArrowLeft">◀</button>
+        <button id="next" title="Siguiente diapositiva" aria-label="Ir a la siguiente diapositiva" aria-keyshortcuts="ArrowRight">▶</button>
+        <button id="toggleTheme" title="Alternar tema claro/oscuro" aria-label="Cambiar entre tema claro y oscuro" aria-keyshortcuts="t">
+          <span aria-hidden="true">🔆</span>
+        </button>
       </div>
-    </main>
+      <div class="progress" role="progressbar" aria-label="Progreso de la presentación" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1">
+        <div class="bar" id="bar"></div>
+      </div>
+      <div class="controls">
+        <span class="kbd" aria-label="Posición actual en la presentación">
+          Diapositiva <span id="pos" aria-live="polite">1</span> de <span id="total">8</span>
+        </span>
+      </div>
+    </div>
+  </main>
 
-    <script src="js/app.js"></script>
-  </body>
+  <script src="js/app.js"></script>
+</body>
 </html>
