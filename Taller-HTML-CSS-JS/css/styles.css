@@ -70,11 +70,13 @@ body {
     display: grid;
     place-items: center;
     padding: clamp(16px, 3vw, 48px);
+    pointer-events: none;
 }
 
 .slide.active {
     opacity: 1;
     transform: translateX(0);
+    pointer-events: auto;
 }
 
 /* ==== Cards (Diapositivas) */
@@ -82,10 +84,16 @@ body {
     padding: 5%;
     width: min(1100px, 92vw);
     background: var(--surface-contrast);
-    color: var(--muted);
+    color: var(--text);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow);
     border: 1px solid color-mix(in oklab, var(--surface-contrast) 85%, white 15%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* ====== UI: HUD ====== */
@@ -141,10 +149,19 @@ button {
     border-radius: var(--radius-ui);
     cursor: pointer;
     font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     border-color: color-mix(in oklab, var(--primary) 35%, white 20%);
+    background: linear-gradient(180deg,
+            var(--primary),
+            color-mix(in oklab, var(--primary) 90%, black 10%));
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 .kbd {

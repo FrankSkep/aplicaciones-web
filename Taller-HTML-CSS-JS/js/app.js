@@ -1,4 +1,4 @@
-// Gestión de temas
+// === Clase para gestion de tema ===
 class ThemeManager {
     constructor() {
         this.toggleButton = document.getElementById('toggleTheme');
@@ -40,13 +40,13 @@ class ThemeManager {
     }
 }
 
-// Inicializar el gestor de temas
+// Inicializacion  del gestor de temas
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
 
 
+    // === Manejo de diapositivas ===
     (function () {
-        // Seleccionar cada diapositiva, no el contenedor
         const slides = Array.from(document.querySelectorAll('.slide'));
         const overlay = document.querySelector('#indice');
         const nextBtn = document.querySelector('#next');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalEl = document.querySelector('#total');
 
         let i = 0;
-        // Corregir clamp
+
         const clamp = (num, min, max) => Math.max(min, Math.min(num, max));
 
         function setActive(idx) {
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.addEventListener('click', next);
         prevBtn.addEventListener('click', prev);
 
-        // Inicializar estado correcto
         setActive(0);
     })();
 
