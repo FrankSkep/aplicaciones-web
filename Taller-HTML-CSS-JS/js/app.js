@@ -79,6 +79,47 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.addEventListener('click', next);
         prevBtn.addEventListener('click', prev);
 
+        // === Navegación por teclado ===
+        document.addEventListener('keydown', (e) => {
+            // Evitar que se ejecute si el usuario está escribiendo en un input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            switch (e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ': // Barra espaciadora
+                case 'PageDown':
+                    e.preventDefault();
+                    next();
+                    break;
+                
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    prev();
+                    break;
+                
+                case 'Home':
+                    e.preventDefault();
+                    setActive(0);
+                    break;
+                
+                case 'End':
+                    e.preventDefault();
+                    setActive(slides.length - 1);
+                    break;
+                
+                case 't':
+                case 'T':
+                    e.preventDefault();
+                    document.getElementById('toggleTheme').click();
+                    break;
+            }
+        });
+
         setActive(0);
     })();
 

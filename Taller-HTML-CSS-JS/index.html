@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta name="color-scheme" content="light dark" />
     <script>
@@ -38,15 +38,31 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+    <div class="sr-only" aria-live="polite" id="instructions">
+      Usa las flechas del teclado o los botones para navegar entre diapositivas.
+      Presiona T para cambiar el tema.
+    </div>
     <main
       class="deck"
       role="presentacion"
       aria-label="Presentación de diapositivas"
     >
-      <section class="slides" id="slides">
-        <article class="slide active" data-title="Portada">
+      <section
+        class="slides"
+        id="slides"
+        tabindex="0"
+        role="group"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <article
+          class="slide active"
+          data-title="Portada"
+          role="tabpanel"
+          aria-labelledby="slide-1-title"
+        >
           <div class="card">
-            <h2>Bienvenidos al Taller</h2>
+            <h2 id="slide-1-title">Bienvenidos al Taller</h2>
             <p>
               Aprenderemos sobre HTML, CSS y JavaScript, los pilares del
               desarrollo web.
@@ -55,16 +71,21 @@
           </div>
         </article>
 
-        <article class="slide" data-title="¿Qué es HTML?">
+        <article
+          class="slide"
+          data-title="¿Qué es HTML?"
+          role="tabpanel"
+          aria-labelledby="slide-2-title"
+        >
           <div class="card">
-            <h2>¿Qué es HTML?</h2>
+            <h2 id="slide-2-title">¿Qué es HTML?</h2>
             <p>
               HTML (HyperText Markup Language) es el lenguaje estándar para
               crear páginas web.
             </p>
             <img
               src="static/html5.png"
-              alt="Logo de HTML"
+              alt="Logotipo de HTML5 - Escudo naranja con el número 5"
               style="max-width: 120px"
             />
             <p>Ejemplo básico:</p>
@@ -111,7 +132,7 @@
             </p>
             <img
               src="static/css3.png"
-              alt="Logo de CSS"
+              alt="Logotipo de CSS3 - Escudo azul con las letras CSS"
               style="max-width: 120px"
             />
             <p>Ejemplo básico:</p>
@@ -149,7 +170,7 @@ p { color: green; }
             </p>
             <img
               src="static/js.png"
-              alt="Logo de JavaScript"
+              alt="Logotipo de JavaScript - Cuadrado amarillo con las letras JS"
               style="max-width: 120px"
             />
             <p>Ejemplo básico:</p>
@@ -184,7 +205,7 @@ alert('¡Hola desde JavaScript!');
             </ul>
             <img
               src="static/htmlcssjs.png"
-              alt="Stack web"
+              alt="Combinación de los logotipos de HTML5, CSS3 y JavaScript representando el stack de desarrollo web frontend"
               style="max-width: 220px"
             />
             <p>¡Gracias por participar!</p>
@@ -193,19 +214,48 @@ alert('¡Hola desde JavaScript!');
       </section>
 
       <!-- HUD -->
-      <div class="hud" aria-hidden="true">
+      <div class="hud" role="toolbar" aria-label="Controles de presentación">
         <div class="controls">
-          <button id="prev" title="Anterior (←)">◀</button>
-          <button id="next" title="Siguiente (→)">▶</button>
-          <button id="toggleTheme" title="Cambiar tema (T)">🔆</button>
+          <button
+            id="prev"
+            title="Diapositiva anterior"
+            aria-label="Ir a la diapositiva anterior"
+            aria-keyshortcuts="ArrowLeft"
+          >
+            ◀
+          </button>
+          <button
+            id="next"
+            title="Siguiente diapositiva"
+            aria-label="Ir a la siguiente diapositiva"
+            aria-keyshortcuts="ArrowRight"
+          >
+            ▶
+          </button>
+          <button
+            id="toggleTheme"
+            title="Alternar tema claro/oscuro"
+            aria-label="Cambiar entre tema claro y oscuro"
+            aria-keyshortcuts="t"
+          >
+            <span aria-hidden="true">🔆</span>
+          </button>
         </div>
-        <div class="progress" aria-label="Progreso">
+        <div
+          class="progress"
+          role="progressbar"
+          aria-label="Progreso de la presentación"
+          aria-valuemin="1"
+          aria-valuemax="8"
+          aria-valuenow="1"
+        >
           <div class="bar" id="bar"></div>
         </div>
         <div class="controls">
-          <span class="kbd" title="Diapositiva"
-            ><span id="pos">1</span><span id="total">1</span></span
-          >
+          <span class="kbd" aria-label="Posición actual en la presentación">
+            Diapositiva <span id="pos" aria-live="polite">1</span> de
+            <span id="total">8</span>
+          </span>
         </div>
       </div>
     </main>
