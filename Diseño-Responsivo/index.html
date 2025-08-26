@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Design</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- <link -->
+    <!-- rel="stylesheet" -->
+    <!-- href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" -->
+    <!-- /> -->
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">Mi sitio</div>
+      <button
+        id="burger"
+        class="burger"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav id="nav" class="site-nav">
+        <ul>
+          <a href="#">Inicio</a>
+          <a href="#">Productos</a>
+          <a href="#">Soporte</a>
+          <a href="#">Contacto</a>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar card">
+        <h2>Resumen</h2>
+        <p>Sitio responsitvo para el taller de apps web.</p>
+        <p>Impartido por carlos</p>
+      </aside>
+      <section class="hero card">
+        <h1>Formulario Responsivo</h1>
+        <p>
+          En escritorio, el formulario estara en 2 columnas con grupos. En
+          movil, los grupos se reordenaran
+        </p>
+        <button class="cta">Crear cuenta ahora!</button>
+      </section>
+      <section class="form-wrap card">
+        <form id="sign-up" novalidate>
+          <fieldset>
+            <legend>Información Personal</legend>
+            <div>
+              <label for="name">Nombre:</label>
+              <input type="text" id="name" name="name" required />
+              <small class="error-msg">Requerido</small>
+            </div>
+            <div>
+              <label for="email">Correo Electrónico:</label>
+              <input type="email" id="email" name="email" required />
+              <small class="error-msg">Requerido</small>
+            </div>
+
+            <legend>Informacion de la cuenta</legend>
+            <div>
+              <label for="username">Nombre de usuario:</label>
+              <input type="text" id="username" name="username" required />
+              <small class="error-msg">Requerido</small>
+            </div>
+            <div>
+              <label for="password">Contraseña:</label>
+              <input type="password" id="password" name="password" required />
+              <small class="error-msg">Requerido</small>
+            </div>
+
+            <legend>Informacion adicional</legend>
+            <div>
+              <label for="age">Edad:</label>
+              <input type="number" id="age" name="age" required />
+              <small class="error-msg">Requerido</small>
+            </div>
+            <div>
+              <label for="bio">Biografía:</label>
+              <textarea id="bio" name="bio" rows="3" required></textarea>
+              <small class="error-msg">Requerido</small>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <button type="submit" class="primary">Crear cuenta</button>
+      <button type="reset" class="secondary">Limpiar</button>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
