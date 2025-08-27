@@ -16,14 +16,15 @@ const form = document.getElementById('signup');
 // Abrir modal
 btnRegistro.addEventListener('click', () => {
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Evita scroll
+    document.body.style.overflow = 'hidden';
 });
 
 // Cerrar modal
 closeModal.forEach((btn) => {
     btn.addEventListener('click', () => {
         modal.style.display = 'none';
-        document.body.style.overflow = ''; // Restaura scroll
+        document.body.style.overflow = '';
+        clearFormErrors();
     });
 });
 
@@ -32,8 +33,21 @@ modal.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.style.display = 'none';
         document.body.style.overflow = '';
+        clearFormErrors();
     }
 });
+
+// Función para limpiar formulario
+function clearFormErrors() {
+    const fields = ['nombre', 'email', 'password', 'cp'];
+    fields.forEach((fieldId) => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.classList.remove('error');
+            field.value = '';
+        }
+    });
+}
 
 // Validación del formulario
 form.addEventListener('submit', (e) => {
@@ -70,7 +84,7 @@ form.addEventListener('submit', (e) => {
     }
 
     // Validar CP
-    if (cp.value && !/^\d{5}$/.test(cp.value)) {
+    if (!cp.value && !/^\d{5}$/.test(cp.value)) {
         cp.classList.add('error');
         ok = false;
     } else {
@@ -82,7 +96,5 @@ form.addEventListener('submit', (e) => {
         form.reset();
         modal.style.display = 'none';
         document.body.style.overflow = '';
-    } else {
-        alert('Por favor, revisa los campos marcados.');
     }
 });
