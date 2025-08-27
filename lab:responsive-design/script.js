@@ -78,11 +78,11 @@ form.addEventListener('submit', (e) => {
     }
 
     if (ok) {
-        alert('✅ ¡Cuenta creada! Bienvenido.');
+        alert('¡Cuenta creada! Bienvenido.');
         form.reset();
         modal.style.display = 'none';
         document.body.style.overflow = '';
     } else {
-        alert('❌ Por favor, revisa los campos marcados.');
+        alert('Por favor, revisa los campos marcados.');
     }
 });
