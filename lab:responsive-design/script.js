@@ -1,17 +1,24 @@
 // Menú hamburguesa
 const burger = document.getElementById('burger');
 const nav = document.querySelector('.site-nav');
+
 burger.addEventListener('click', () => {
     nav.classList.toggle('open');
     const expanded = nav.classList.contains('open');
     burger.setAttribute('aria-expanded', expanded);
 });
 
-// Modal
+// Elementos del modal
 const btnRegistro = document.getElementById('btnRegistro');
 const modal = document.getElementById('modal');
 const closeModal = document.querySelectorAll('.close, .close-modal');
 const form = document.getElementById('signup');
+
+// Campos del formulario
+const nombre = document.getElementById('nombre');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const cp = document.getElementById('cp');
 
 // Abrir modal
 btnRegistro.addEventListener('click', () => {
@@ -39,29 +46,26 @@ modal.addEventListener('click', (e) => {
 
 // Función para limpiar formulario
 function clearFormErrors() {
-    const fields = ['nombre', 'email', 'password', 'cp'];
-    fields.forEach((fieldId) => {
-        const field = document.getElementById(fieldId);
-        if (field) {
-            field.classList.remove('error');
-            field.value = '';
-        }
+    [nombre, email, password, cp].forEach((field) => {
+        field.classList.remove('error');
+        field.value = '';
     });
 }
 
 // Validación del formulario
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    let ok = true;
     const nombre = document.getElementById('nombre');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const cp = document.getElementById('cp');
 
+    let hasErrors = false; // Bandera para controlar si hay errores
+
     // Validar nombre
     if (!nombre.value.trim()) {
         nombre.classList.add('error');
-        ok = false;
+        hasErrors = true;
     } else {
         nombre.classList.remove('error');
     }
@@ -70,7 +74,7 @@ form.addEventListener('submit', (e) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.value.trim() || !emailRegex.test(email.value)) {
         email.classList.add('error');
-        ok = false;
+        hasErrors = true;
     } else {
         email.classList.remove('error');
     }
@@ -78,23 +82,25 @@ form.addEventListener('submit', (e) => {
     // Validar contraseña
     if (!password.value || password.value.length < 6) {
         password.classList.add('error');
-        ok = false;
+        hasErrors = true;
     } else {
         password.classList.remove('error');
     }
 
     // Validar CP
-    if (!cp.value && !/^\d{5}$/.test(cp.value)) {
+    if (!cp.value || !/^\d{5}$/.test(cp.value)) {
         cp.classList.add('error');
-        ok = false;
+        hasErrors = true;
     } else {
         cp.classList.remove('error');
     }
 
-    if (ok) {
-        alert('¡Cuenta creada! Bienvenido.');
-        form.reset();
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
+    if (hasErrors) {
+        return;
     }
+
+    alert('¡Cuenta creada! Bienvenido.');
+    form.reset();
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
 });

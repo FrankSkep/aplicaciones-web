@@ -330,6 +330,7 @@ input:focus {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
+    font-size: 1.1rem;
 }
 
 .btn-course:hover {
@@ -388,10 +389,15 @@ input:focus {
 @media (max-width: 767px) {
     .burger {
         display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .burger:hover {
+        transform: scale(1.1);
     }
 
     .site-nav {
-        display: none;
+        display: flex;
         position: absolute;
         top: 100%;
         left: 0;
@@ -401,10 +407,47 @@ input:focus {
         gap: 1rem;
         padding: 1rem;
         border-top: 1px solid var(--border);
+
+        /* Animación de entrada/salida */
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 0;
+        overflow: hidden;
     }
 
     .site-nav.open {
-        display: flex;
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        max-height: 300px;
+    }
+
+    /* Animación de los enlaces del menú */
+    /* .site-nav a {
+        transform: translateX(-20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        transition-delay: 0.1s;
+    }
+
+    .site-nav.open a {
+        transform: translateX(0);
+        opacity: 1;
+    } */
+
+    /* Delay escalonado para cada enlace */
+    .site-nav.open a:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+
+    .site-nav.open a:nth-child(2) {
+        transition-delay: 0.2s;
+    }
+
+    .site-nav.open a:nth-child(3) {
+        transition-delay: 0.3s;
     }
 
     .hero h1 {
