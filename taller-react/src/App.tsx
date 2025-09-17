@@ -32,7 +32,7 @@ function App() {
     // Simulación ligera de trabajo pesado
     let total = 0;
     for (let i = 0; i < 10000; i++) total += persona.edad * 10; // 26 * 10 * 10000 = 260000 -> demostración
-    // Para mostrar un número manejable retornamos edad * 1000 (como en la foto)
+    // Para mostrar un número manejable retornamos edad * 1000
     return persona.edad * 1000;
   }, [persona.edad]);
 
