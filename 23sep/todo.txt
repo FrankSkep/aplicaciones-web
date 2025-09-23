@@ -1,0 +1,5 @@
+252pokemons
+paginar
+buscar por nombre, que incluyan las letras
+abrir cada pokemon
+id, nombre, imagen
