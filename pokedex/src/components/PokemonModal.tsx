@@ -72,14 +72,14 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
               <p className="mt-4">Cargando detalles...</p>
             </div>
           ) : pokemon ? (
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div className="text-center">
                 <img
                   src={pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}
                   alt={pokemon.name}
                   className="w-48 h-48 mx-auto mb-4"
                 />
-                <h3 className="text-3xl font-bold capitalize mb-2">
+                <h3 className="text-2xl font-bold capitalize mb-2">
                   #{pokemon.id.toString().padStart(3, '0')} {pokemon.name}
                 </h3>
                 <div className="flex justify-center gap-2 mb-4">
