@@ -55,12 +55,12 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">Detalles del Pokémon</h2>
+        <div className="p-4 sm:p-6">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-2xl font-bold">Detalles del Pokémon</h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
+              className="text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl p-1"
             >
               ×
             </button>
@@ -69,24 +69,24 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
           {loading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-              <p className="mt-4">Cargando detalles...</p>
+              <p className="mt-4 text-sm sm:text-base">Cargando detalles...</p>
             </div>
           ) : pokemon ? (
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-6">
               <div className="text-center">
                 <img
                   src={pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}
                   alt={pokemon.name}
-                  className="w-48 h-48 mx-auto mb-4"
+                  className="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-4"
                 />
-                <h3 className="text-2xl font-bold capitalize mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold capitalize mb-2">
                   #{pokemon.id.toString().padStart(3, '0')} {pokemon.name}
                 </h3>
-                <div className="flex justify-center gap-2 mb-4">
+                <div className="flex justify-center gap-2 mb-4 flex-wrap">
                   {pokemon.types.map((type) => (
                     <span
                       key={type.type.name}
-                      className={`px-3 py-1 rounded-full text-white font-semibold ${
+                      className={`px-2 sm:px-3 py-1 rounded-full text-white font-semibold text-sm ${
                         typeColors[type.type.name] || 'bg-gray-400'
                       }`}
                     >
@@ -96,20 +96,24 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h4 className="text-lg font-semibold mb-3">Información Básica</h4>
+                  <h4 className="text-base sm:text-lg font-semibold mb-3">Información Básica</h4>
                   <div className="space-y-2">
-                    <p><span className="font-medium">Altura:</span> {pokemon.height / 10} m</p>
-                    <p><span className="font-medium">Peso:</span> {pokemon.weight / 10} kg</p>
+                    <p className="text-sm sm:text-base">
+                      <span className="font-medium">Altura:</span> {pokemon.height / 10} m
+                    </p>
+                    <p className="text-sm sm:text-base">
+                      <span className="font-medium">Peso:</span> {pokemon.weight / 10} kg
+                    </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold mb-3">Habilidades</h4>
+                  <h4 className="text-base sm:text-lg font-semibold mb-3">Habilidades</h4>
                   <div className="space-y-1">
                     {pokemon.abilities.map((ability, index) => (
-                      <p key={index} className="capitalize">
+                      <p key={index} className="capitalize text-sm sm:text-base">
                         {ability.ability.name.replace('-', ' ')}
                       </p>
                     ))}
@@ -118,15 +122,15 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold mb-3">Estadísticas Base</h4>
-                <div className="space-y-3">
+                <h4 className="text-base sm:text-lg font-semibold mb-3">Estadísticas Base</h4>
+                <div className="space-y-2 sm:space-y-3">
                   {pokemon.stats.map((stat) => (
                     <div key={stat.stat.name}>
                       <div className="flex justify-between mb-1">
-                        <span className="capitalize font-medium">
+                        <span className="capitalize font-medium text-xs sm:text-sm">
                           {stat.stat.name.replace('-', ' ')}
                         </span>
-                        <span className="font-semibold">{stat.base_stat}</span>
+                        <span className="font-semibold text-xs sm:text-sm">{stat.base_stat}</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
@@ -140,7 +144,7 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
               </div>
             </div>
           ) : (
-            <div className="text-center py-8 text-red-500">
+            <div className="text-center py-8 text-red-500 text-sm sm:text-base">
               Error al cargar los detalles del Pokémon
             </div>
           )}

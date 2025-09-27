@@ -53,11 +53,11 @@ export default function PokemonCard({ id, name, onClick }: PokemonCardProps) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow cursor-pointer">
+      <div className="bg-white rounded-lg shadow-md p-2 sm:p-3 md:p-4 hover:shadow-lg transition-shadow cursor-pointer">
         <div className="animate-pulse">
-          <div className="w-full h-32 bg-gray-300 rounded mb-2"></div>
-          <div className="h-4 bg-gray-300 rounded mb-2"></div>
-          <div className="h-3 bg-gray-300 rounded w-3/4"></div>
+          <div className="w-full h-20 sm:h-24 md:h-32 bg-gray-300 rounded mb-2"></div>
+          <div className="h-3 sm:h-4 bg-gray-300 rounded mb-2"></div>
+          <div className="h-2 sm:h-3 bg-gray-300 rounded w-3/4"></div>
         </div>
       </div>
     );
@@ -65,32 +65,33 @@ export default function PokemonCard({ id, name, onClick }: PokemonCardProps) {
 
   if (error || !pokemon) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <div className="text-red-500 text-center">{error || 'Error'}</div>
+      <div className="bg-white rounded-lg shadow-md p-2 sm:p-3 md:p-4">
+        <div className="text-red-500 text-center text-xs sm:text-sm">{error || 'Error'}</div>
       </div>
     );
   }
 
   return (
     <div 
-      className="bg-white rounded-lg shadow-md p-3 hover:shadow-lg transition-shadow cursor-pointer transform hover:scale-105"
+      className="bg-white rounded-lg shadow-md p-2 sm:p-3 hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 active:scale-95"
       onClick={onClick}
     >
       <div className="text-center">
         <img
           src={pokemon.sprites.front_default}
           alt={pokemon.name}
-          className="w-28 h-28 mx-auto mb-1"
+          className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 mx-auto mb-1 sm:mb-2"
           loading="lazy"
         />
-        <h3 className="font-bold text-sm capitalize mb-1">
+        <h3 className="font-bold text-xs sm:text-sm capitalize mb-1 sm:mb-2 leading-tight">
           #{pokemon.id.toString().padStart(3, '0')} {pokemon.name}
         </h3>
+
         <div className="flex flex-wrap justify-center gap-1">
           {pokemon.types.map((type) => (
             <span
               key={type.type.name}
-              className={`px-1.5 py-0.5 rounded-full text-white text-xs font-semibold ${
+              className={`px-1 sm:px-1.5 py-0.5 rounded-full text-white text-xs font-semibold ${
                 typeColors[type.type.name] || 'bg-gray-400'
               }`}
             >
