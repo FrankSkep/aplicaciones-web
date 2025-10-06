@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
     imports: [
         ConfigModule.forRoot(),
-        TodosModule, TypeOrmModule.forRoot({
+        TodosModule,
+        TypeOrmModule.forRoot({
             type: 'postgres',
             host: 'localhost',
             port: 5432,
@@ -15,7 +16,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             database: process.env.DB_NAME,
             autoLoadEntities: true,
             synchronize: true,
-        })],
+        }),
+    ],
     controllers: [],
     providers: [],
 })

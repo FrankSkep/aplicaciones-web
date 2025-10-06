@@ -11,7 +11,6 @@ import {
     Put,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { Todo } from './entity/Todo';
 import { CreateTodoRequest } from './dtos/createTodoRequest';
 import { UpdateTodoRequest } from './dtos/updateTodoRequest';
 

@@ -11,7 +11,9 @@ export type MockRepo<T extends ObjectLiteral> = {
         : never;
 };
 
-export const createMockRepository = <T extends ObjectLiteral = any>(): MockRepo<T> =>
+export const createMockRepository = <
+    T extends ObjectLiteral = any,
+>(): MockRepo<T> =>
     ({
         find: jest.fn(),
         findOne: jest.fn(),

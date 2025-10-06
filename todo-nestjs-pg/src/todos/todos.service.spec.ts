@@ -81,7 +81,7 @@ describe('TodosService', () => {
         it('actualiza campos existentes', async () => {
             const existing: Todo = { id: 5, title: 'Viejo', completed: false };
             repositoryMock.findOneBy.mockResolvedValue(existing);
-            
+
             const saved: Todo = { id: 5, title: 'Nuevo', completed: true };
             repositoryMock.save.mockResolvedValue(saved);
 
