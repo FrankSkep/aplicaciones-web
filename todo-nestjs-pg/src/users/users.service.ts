@@ -52,11 +52,23 @@ export class UsersService {
 
     async update(id: number, updateUserRequest: UpdateUserRequest) {
         try {
-            if (updateUserRequest.password) {
+            const user = await this.repositorio.findOneBy({ id });
+            if (!user) {
+                throw new NotFoundException(
+                    `Usuario con ID ${id} no encontrado`,
+                );
+            }
+
+            if (
+                updateUserRequest.password &&
+                updateUserRequest.password.trim()
+            ) {
                 updateUserRequest.password = await bcrypt.hash(
                     updateUserRequest.password,
                     10,
                 );
+            } else if (updateUserRequest.password !== undefined) {
+                delete updateUserRequest.password;
             }
             await this.repositorio.update(id, updateUserRequest);
             return this.repositorio.findOneBy({ id });

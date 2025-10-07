@@ -1,18 +1,19 @@
 import {
     IsEmail,
-    IsNotEmpty,
     IsString,
     IsStrongPassword,
-    MaxLength,
+    IsOptional,
+    MinLength,
 } from 'class-validator';
 
 export class UpdateUserRequest {
+    @IsOptional()
     @IsString()
     @IsEmail()
-    @IsNotEmpty()
-    email: string;
+    email?: string;
 
+    @IsOptional()
     @IsStrongPassword()
-    @IsNotEmpty()
-    password: string;
+    @MinLength(8)
+    password?: string;
 }
