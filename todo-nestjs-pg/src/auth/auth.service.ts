@@ -46,4 +46,35 @@ export class AuthService {
 
         return { access_token, refresh_token, user };
     }
+
+    async refreshAccessToken(refreshToken: string) {
+        try {
+            const payload = await this.jwtService.verifyAsync(refreshToken, {
+                secret: process.env.JWT_REFRESH_SECRET,
+            });
+
+            const user = await this.usersService.findByUsername(
+                payload.username,
+            );
+
+            if (!user) {
+                throw new UnauthorizedException('Usuario no encontrado');
+            }
+
+            const newPayload = {
+                sub: user.id,
+                username: user.username,
+            };
+
+            // Solo se genera un nuevo access_token
+            const access_token = this.jwtService.sign(newPayload, {
+                secret: process.env.JWT_ACCESS_SECRET,
+                expiresIn: '15m',
+            });
+
+            return { access_token };
+        } catch (error) {
+            throw new UnauthorizedException('Token de refresco inválido o expirado');
+        }
+    }
 }
