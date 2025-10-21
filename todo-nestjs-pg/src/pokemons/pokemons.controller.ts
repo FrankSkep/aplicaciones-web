@@ -16,7 +16,13 @@ export class PokemonsController {
     @Query('page') page: number = 1,
     @Query('size') size: number = 10,
     @Query('name') name?: string,
+    @Query('order') order: 'asc' | 'desc' = 'asc',
   ) {
-    return this.pokemonsService.findAll(Number(page), Number(size), name ? String(name) : undefined);
+    return this.pokemonsService.findAll(
+      Number(page),
+      Number(size),
+      name ? String(name) : undefined,
+      order === 'desc' ? 'desc' : 'asc',
+    );
   }
 }

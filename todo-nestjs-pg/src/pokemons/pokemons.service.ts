@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { Pokemon } from './entity/pokemon.entity';
 import axios from 'axios';
 
@@ -41,7 +41,7 @@ export class PokemonsService {
     return this.pokemonRepository.save(uniqueEntities);
   }
 
-  async findAll(page: number = 1, size: number = 20, name?: string): Promise<{
+  async findAll(page: number = 1, size: number = 20, name?: string, order: 'asc' | 'desc' = 'asc'): Promise<{
     data: Pokemon[];
     total: number;
     page: number;
@@ -58,40 +58,13 @@ export class PokemonsService {
     if (p < 1) p = 1;
     if (s < 1) s = 20;
 
-    // If no name filter, use the simpler findAndCount
-    if (!name) {
-      const [data, total] = await this.pokemonRepository.findAndCount({
-        skip: (p - 1) * s,
-        take: s,
-        order: { id: 'ASC' },
-      });
-      const totalPages = Math.ceil(total / s);
-      const hasNext = p < totalPages;
-      const hasPrev = p > 1;
-      return {
-        data,
-        total,
-        page: p,
-        size: s,
-        totalPages,
-        hasNext,
-        hasPrev,
-        nextPage: hasNext ? p + 1 : null,
-        prevPage: hasPrev ? p - 1 : null,
-      };
-    }
-
-    // Name filter provided -> use QueryBuilder with ILIKE (Postgres)
-    const qb = this.pokemonRepository.createQueryBuilder('pokemon');
-    qb.where('pokemon.name ILIKE :name', { name: `%${name}%` });
-
-    const total = await qb.getCount();
-
-    qb.orderBy('pokemon.id', 'ASC')
-      .skip((p - 1) * s)
-      .take(s);
-
-    const data = await qb.getMany();
+    const where = name ? { name: Like(`%${name}%`) } : {};
+    const [data, total] = await this.pokemonRepository.findAndCount({
+      where,
+      skip: (p - 1) * s,
+      take: s,
+      order: { id: order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC' },
+    });
     const totalPages = Math.ceil(total / s);
     const hasNext = p < totalPages;
     const hasPrev = p > 1;
