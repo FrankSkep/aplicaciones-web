@@ -41,7 +41,11 @@ export class PokemonsService {
     return this.pokemonRepository.save(uniqueEntities);
   }
 
-  async findAll(page: number = 1, size: number = 20, name?: string, order: 'asc' | 'desc' = 'asc'): Promise<{
+  async findById(id: number): Promise<Pokemon | null> {
+    return this.pokemonRepository.findOne({ where: { id } });
+  }
+
+  async findAll(page: number = 1, size: number = 20, search?: string, order: 'asc' | 'desc' = 'asc'): Promise<{
     data: Pokemon[];
     total: number;
     page: number;
@@ -58,7 +62,18 @@ export class PokemonsService {
     if (p < 1) p = 1;
     if (s < 1) s = 20;
 
-    const where = name ? { name: Like(`%${name}%`) } : {};
+    let where: any = {};
+    if (search) {
+      const trimmed = String(search).trim();
+      const asInt = Number(trimmed);
+      const isId = /^\d+$/.test(trimmed) && Number.isInteger(asInt);
+      if (isId) {
+      // buscar por id o por nombre (substring)
+      where = [{ id: asInt }, { name: Like(`%${trimmed}%`) }];
+      } else {
+      where = { name: Like(`%${trimmed}%`) };
+      }
+    }
     const [data, total] = await this.pokemonRepository.findAndCount({
       where,
       skip: (p - 1) * s,

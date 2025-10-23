@@ -1,19 +1,29 @@
-import axios from 'axios';
+import { api } from '../shared/api';
 import type { Pokemon, PokemonListItem } from '../types/pokemon';
-
-const API_BASE_URL = 'https://pokeapi.co/api/v2';
+import type { PokemonResponse, Datum } from '../types/pokemonResponse';
 
 export const pokemonApi = {
+  async fetchAndSave(): Promise<void> {
+    await api.post('/pokemons/fetch');
+  },
+
   async getPokemonList(): Promise<PokemonListItem[]> {
-    const response = await axios.get(`${API_BASE_URL}/pokemon?limit=252`);
-    return response.data.results.map((pokemon: any, index: number) => ({
-      ...pokemon,
-      id: index + 1
+    // Backwards-compatible: fetch all 252 items via backend if available
+    const response = await api.get<PokemonResponse>('/pokemons', { params: { page: 1, size: 1000 } });
+    return response.data.data.map((d: Datum) => ({
+      name: d.name,
+      url: d.url,
+      id: d.id,
     }));
   },
 
   async getPokemon(id: number): Promise<Pokemon> {
-    const response = await axios.get(`${API_BASE_URL}/pokemon/${id}`);
+    const response = await api.get(`/pokemons/${id}`);
+    return response.data as Pokemon;
+  },
+
+  async search(params: { page?: number; size?: number; name?: string; order?: 'asc'|'desc' }) {
+    const response = await api.get<PokemonResponse>('/pokemons', { params });
     return response.data;
   }
 };

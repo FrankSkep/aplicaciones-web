@@ -75,22 +75,22 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
             <div className="space-y-4 sm:space-y-6">
               <div className="text-center">
                 <img
-                  src={pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}
+                  src={pokemon.image || '/placeholder.png'}
                   alt={pokemon.name}
-                  className="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-4"
+                  className="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-4 object-contain"
                 />
                 <h3 className="text-xl sm:text-2xl font-bold capitalize mb-2">
                   #{pokemon.id.toString().padStart(3, '0')} {pokemon.name}
                 </h3>
                 <div className="flex justify-center gap-2 mb-4 flex-wrap">
-                  {pokemon.types.map((type) => (
+                  {(pokemon.types || []).map((t) => (
                     <span
-                      key={type.type.name}
+                      key={t}
                       className={`px-2 sm:px-3 py-1 rounded-full text-white font-semibold text-sm ${
-                        typeColors[type.type.name] || 'bg-gray-400'
+                        typeColors[t] || 'bg-gray-400'
                       }`}
                     >
-                      {type.type.name}
+                      {t}
                     </span>
                   ))}
                 </div>
@@ -101,47 +101,27 @@ export default function PokemonModal({ pokemonId, isOpen, onClose }: PokemonModa
                   <h4 className="text-base sm:text-lg font-semibold mb-3">Información Básica</h4>
                   <div className="space-y-2">
                     <p className="text-sm sm:text-base">
-                      <span className="font-medium">Altura:</span> {pokemon.height / 10} m
+                      <span className="font-medium">Altura:</span> {pokemon.height ? `${pokemon.height / 10} m` : '-'}
                     </p>
                     <p className="text-sm sm:text-base">
-                      <span className="font-medium">Peso:</span> {pokemon.weight / 10} kg
+                      <span className="font-medium">Peso:</span> {pokemon.weight ? `${pokemon.weight / 10} kg` : '-'}
                     </p>
                   </div>
                 </div>
 
                 <div>
                   <h4 className="text-base sm:text-lg font-semibold mb-3">Habilidades</h4>
-                  <div className="space-y-1">
-                    {pokemon.abilities.map((ability, index) => (
-                      <p key={index} className="capitalize text-sm sm:text-base">
-                        {ability.ability.name.replace('-', ' ')}
-                      </p>
-                    ))}
-                  </div>
+                    <div className="space-y-1">
+                      {(pokemon.abilities || []).map((a, index) => (
+                        <p key={index} className="capitalize text-sm sm:text-base">
+                          {a.replace('-', ' ')}
+                        </p>
+                      ))}
+                    </div>
                 </div>
               </div>
 
-              <div>
-                <h4 className="text-base sm:text-lg font-semibold mb-3">Estadísticas Base</h4>
-                <div className="space-y-2 sm:space-y-3">
-                  {pokemon.stats.map((stat) => (
-                    <div key={stat.stat.name}>
-                      <div className="flex justify-between mb-1">
-                        <span className="capitalize font-medium text-xs sm:text-sm">
-                          {stat.stat.name.replace('-', ' ')}
-                        </span>
-                        <span className="font-semibold text-xs sm:text-sm">{stat.base_stat}</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${Math.min((stat.base_stat / 255) * 100, 100)}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* Backend doesn't return stats in this entity — remove stats UI. */}
             </div>
           ) : (
             <div className="text-center py-8 text-red-500 text-sm sm:text-base">

@@ -1,32 +1,12 @@
 export interface Pokemon {
   id: number;
   name: string;
-  sprites: {
-    front_default: string;
-    other: {
-      'official-artwork': {
-        front_default: string;
-      };
-    };
-  };
-  types: Array<{
-    type: {
-      name: string;
-    };
-  }>;
-  height: number;
-  weight: number;
-  abilities: Array<{
-    ability: {
-      name: string;
-    };
-  }>;
-  stats: Array<{
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }>;
+  url?: string;
+  image?: string | null;
+  types?: string[];
+  abilities?: string[];
+  height?: number | null;
+  weight?: number | null;
 }
 
 export interface PokemonListItem {

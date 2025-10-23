@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, HttpCode } from '@nestjs/common';
+import { Controller, Get, Query, Post, HttpCode, Param } from '@nestjs/common';
 import { PokemonsService } from './pokemons.service';
 
 @Controller('pokemons')
@@ -24,5 +24,10 @@ export class PokemonsController {
       name ? String(name) : undefined,
       order === 'desc' ? 'desc' : 'asc',
     );
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: number) {
+    return this.pokemonsService.findById(Number(id));
   }
 }

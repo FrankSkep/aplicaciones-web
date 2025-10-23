@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../../../../shared/api';
-import { useState } from 'react';
-import type { PokemonResponse } from '../interface/types/PokemonResponse';
+import { api } from '../shared/api';
+import { useState, useEffect } from 'react';
+import type { PokemonResponse } from '../types/pokemonResponse';
 
 interface UseSearchPokemonsParams {
     page?: number;
@@ -18,41 +18,41 @@ export const useSearchPokemons = (initialParams?: UseSearchPokemonsParams) => {
         initialParams?.sort || 'asc'
     );
 
-    let where = search;
+    // Debounce search to avoid firing a request on every keystroke
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
 
-    if (search) {
-        const id = Number(search);
-        if (!isNaN(id) && String(id) === String(search)) {
-            where = id.toString();
-        }
-    }
+    useEffect(() => {
+        const t = setTimeout(() => setDebouncedSearch(search), 300);
+        return () => clearTimeout(t);
+    }, [search]);
 
     const params = {
         page,
         size: pageSize,
-        name: search || undefined,
+        name: debouncedSearch || undefined,
         order: sort,
     };
 
-    const query = useQuery({
-        queryKey: ['buscarPokemones', [params]],
+    const query = useQuery<PokemonResponse, Error>({
+        // use primitives in the key to avoid new object identity each render
+        queryKey: ['buscarPokemones', page, pageSize, debouncedSearch, sort],
         queryFn: async () => {
-            await new Promise((resolve) => setTimeout(resolve, 300));
-            const response = await api.get<PokemonResponse>('/pokemons', {
-                params,
-            });
+            const response = await api.get<PokemonResponse>('/pokemons', { params });
             return response.data;
         },
+        staleTime: 1000 * 10, // 10s
     });
 
+    const typedData = query.data as PokemonResponse | undefined;
+
     const nextPage = () => {
-        if (query.data?.hasNext) {
+        if (typedData?.hasNext) {
             setPage((prev) => prev + 1);
         }
     };
 
     const prevPage = () => {
-        if (query.data?.hasPrev) {
+        if (typedData?.hasPrev) {
             setPage((prev) => prev - 1);
         }
     };

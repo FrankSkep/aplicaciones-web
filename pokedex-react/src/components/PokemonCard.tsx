@@ -4,7 +4,6 @@ import { pokemonApi } from '../services/pokemonApi';
 
 interface PokemonCardProps {
   id: number;
-  name: string;
   onClick: () => void;
 }
 
@@ -29,7 +28,7 @@ const typeColors: Record<string, string> = {
   fairy: 'bg-pink-300',
 };
 
-export default function PokemonCard({ id, name, onClick }: PokemonCardProps) {
+export default function PokemonCard({ id, onClick }: PokemonCardProps) {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,9 +77,9 @@ export default function PokemonCard({ id, name, onClick }: PokemonCardProps) {
     >
       <div className="text-center">
         <img
-          src={pokemon.sprites.front_default}
+          src={pokemon.image || '/placeholder.png'}
           alt={pokemon.name}
-          className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 mx-auto mb-1 sm:mb-2"
+          className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 mx-auto mb-1 sm:mb-2 object-contain"
           loading="lazy"
         />
         <h3 className="font-bold text-xs sm:text-sm capitalize mb-1 sm:mb-2 leading-tight">
@@ -88,14 +87,14 @@ export default function PokemonCard({ id, name, onClick }: PokemonCardProps) {
         </h3>
 
         <div className="flex flex-wrap justify-center gap-1">
-          {pokemon.types.map((type) => (
+          {(pokemon.types || []).map((t) => (
             <span
-              key={type.type.name}
+              key={t}
               className={`px-1 sm:px-1.5 py-0.5 rounded-full text-white text-xs font-semibold ${
-                typeColors[type.type.name] || 'bg-gray-400'
+                typeColors[t] || 'bg-gray-400'
               }`}
             >
-              {type.type.name}
+              {t}
             </span>
           ))}
         </div>

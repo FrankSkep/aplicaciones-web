@@ -1,58 +1,37 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import PokemonGrid from './components/PokemonGrid';
 import Pagination from './components/Pagination';
 import PokemonModal from './components/PokemonModal';
 import LoadingSpinner from './components/LoadingSpinner';
-import type { PokemonListItem } from './types/pokemon';
-import { pokemonApi } from './services/pokemonApi';
 import './App.css';
+import { useSearchPokemons } from './hooks/useSearchPokemons';
 
 function App() {
-  const [pokemonList, setPokemonList] = useState<PokemonListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    query,
+    page,
+    pageSize,
+    search,
+    setSearch,
+    setPage,
+    nextPage,
+    prevPage,
+  } = useSearchPokemons({ page: 1, pageSize: 24, search: '' });
+
+  const POKEMON_PER_PAGE = pageSize || 24;
+
+  const loading = query.isLoading;
+  const error = query.isError ? 'Error al cargar la lista de Pok\u00e9mon' : null;
+
+  const currentRaw = query.data?.data || [];
+  const totalPages = query.data?.totalPages || 1;
+  const totalItems = query.data?.total || 0;
+
+  const currentPokemons = currentRaw.map((d: any) => ({ id: d.id, name: d.name, url: d.url }));
+
   const [selectedPokemonId, setSelectedPokemonId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const POKEMON_PER_PAGE = 24;
-
-  useEffect(() => {
-    const fetchPokemonList = async () => {
-      try {
-        setLoading(true);
-        const data = await pokemonApi.getPokemonList();
-        setPokemonList(data);
-      } catch (err) {
-        setError('Error al cargar la lista de Pokémon');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPokemonList();
-  }, []);
-
-  const filteredPokemon = useMemo(() => {
-    return pokemonList.filter(pokemon =>
-      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [pokemonList, searchTerm]);
-
-  const totalPages = Math.ceil(filteredPokemon.length / POKEMON_PER_PAGE);
-
-  const currentPokemon = useMemo(() => {
-    const startIndex = (currentPage - 1) * POKEMON_PER_PAGE;
-    const endIndex = startIndex + POKEMON_PER_PAGE;
-    return filteredPokemon.slice(startIndex, endIndex);
-  }, [filteredPokemon, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
 
   const handlePokemonClick = (id: number) => {
     setSelectedPokemonId(id);
@@ -64,13 +43,13 @@ function App() {
     setSelectedPokemonId(null);
   };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handlePageChange = (pageNum: number) => {
+    setPage(pageNum);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) {
-    return <LoadingSpinner message="Cargando Pokédex..." />;
+    return <LoadingSpinner message="Cargando Pok\u00e9dex..." />;
   }
 
   if (error) {
@@ -103,33 +82,33 @@ function App() {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4 sm:mb-6">
-          <div className="flex-1">
-            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-          </div>
+            <div className="flex-1">
+              <SearchBar searchTerm={search} onSearchChange={setSearch} />
+            </div>
           
           <div className="text-center sm:text-right">
             <p className="text-orange-600 font-medium text-xs sm:text-sm">
-              {filteredPokemon.length > 0 ? (
+              {totalItems > 0 ? (
                 <>
                   <span className="block sm:inline">
-                    Mostrando {((currentPage - 1) * POKEMON_PER_PAGE) + 1}-{Math.min(currentPage * POKEMON_PER_PAGE, filteredPokemon.length)} de {filteredPokemon.length}
+                    Mostrando {(page - 1) * POKEMON_PER_PAGE + 1}-{Math.min(page * POKEMON_PER_PAGE, totalItems)} de {totalItems}
                   </span>
                   <span className="block sm:inline"> Pokémon</span>
-                  {searchTerm && (
-                    <span className="block sm:inline text-xs"> (filtrado de {pokemonList.length})</span>
+                  {search && (
+                    <span className="block sm:inline text-xs"> (filtrado)</span>
                   )}
                 </>
               ) : (
-                `0 de ${pokemonList.length} Pokémon`
+                `0 de ${totalItems} Pokémon`
               )}
             </p>
           </div>
         </div>
 
-        <PokemonGrid pokemon={currentPokemon} onPokemonClick={handlePokemonClick} searchTerm={searchTerm} />
+  <PokemonGrid pokemon={currentPokemons} onPokemonClick={handlePokemonClick} searchTerm={search} />
 
         <Pagination 
-          currentPage={currentPage}
+          currentPage={page}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
