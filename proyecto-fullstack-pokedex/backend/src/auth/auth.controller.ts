@@ -11,10 +11,24 @@ import { LocalAuthGuard } from './local.guard';
 import { RefreshGuard } from './refresh.guard';
 import { AuthService } from './auth.service';
 import type { Response } from 'express';
+import { UsersService } from 'src/users/users.service';
+import { CreateUserRequest } from 'src/users/dtos/createUserRequest';
+import { Body } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private readonly usersService: UsersService,
+    ) {}
+    @Post('register')
+    @HttpCode(HttpStatus.CREATED)
+    async register(@Body() body: CreateUserRequest) {
+        const user = await this.usersService.create(body);
+        // No devolver la contraseña
+        const { password, ...rest } = user;
+        return rest;
+    }
 
     @UseGuards(LocalAuthGuard)
     @Post('login')

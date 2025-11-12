@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Pokemon } from '../types/pokemon';
 import { pokemonApi } from '../services/pokemonApi';
+import { favoritosApi } from '../services/favoritosApi';
 
 interface PokemonCardProps {
   id: number;
@@ -32,6 +33,7 @@ export default function PokemonCard({ id, onClick }: PokemonCardProps) {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -49,6 +51,21 @@ export default function PokemonCard({ id, onClick }: PokemonCardProps) {
 
     fetchPokemon();
   }, [id]);
+
+  // Nota: para simplificar usamos un estado local optimista cuando el usuario agrega favorito.
+  // Mejoraría consultando /favoritos al iniciar sesión.
+
+  const handleHeartClick = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // evitar abrir modal cuando clickean el corazón
+    try {
+      await favoritosApi.addFavorito(id);
+      setIsFavorite(true);
+      // podríamos mostrar un pequeño toast aquí
+    } catch (err: any) {
+      console.error('Error al agregar favorito', err);
+      alert(err?.response?.data?.message || err?.message || 'Error al agregar favorito. Inicia sesión primero.');
+    }
+  };
 
   if (loading) {
     return (
@@ -75,6 +92,25 @@ export default function PokemonCard({ id, onClick }: PokemonCardProps) {
       className="bg-white rounded-lg shadow-md p-2 sm:p-3 hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 active:scale-95"
       onClick={onClick}
     >
+      {/* Corazón en la esquina superior derecha */}
+      <button
+        onClick={handleHeartClick}
+        aria-label="Agregar a favoritos"
+        className="absolute mt-1 mr-1 right-2 top-2 z-10 bg-white/80 rounded-full p-1 hover:bg-red-100"
+        style={{outline: 'none'}}
+      >
+        {isFavorite ? (
+          // corazón relleno
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18.343l-6.828-6.828a4 4 0 010-5.657z" />
+          </svg>
+        ) : (
+          // corazón outline
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.172 5.172a4 4 0 015.656 0L12 8.343l3.172-3.171a4 4 0 115.656 5.656L12 21.343l-8.828-8.828a4 4 0 010-5.657z" />
+          </svg>
+        )}
+      </button>
       <div className="text-center">
         <img
           src={pokemon.image || '/placeholder.png'}

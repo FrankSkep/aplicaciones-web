@@ -6,6 +6,8 @@ import PokemonModal from './components/PokemonModal';
 import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
 import { useSearchPokemons } from './hooks/useSearchPokemons';
+import LoginModal from './components/LoginModal';
+import RegisterModal from './components/RegisterModal';
 
 function App() {
   const {
@@ -15,11 +17,12 @@ function App() {
     search,
     setSearch,
     setPage,
-    nextPage,
-    prevPage,
   } = useSearchPokemons({ page: 1, pageSize: 24, search: '' });
 
   const POKEMON_PER_PAGE = pageSize || 24;
+
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const loading = query.isLoading;
   const error = query.isError ? 'Error al cargar la lista de Pok\u00e9mon' : null;
@@ -81,6 +84,11 @@ function App() {
           </div>
         </div>
 
+        <div className="flex justify-end gap-2 mb-4">
+          <button onClick={() => setShowRegister(true)} className="px-3 py-1 rounded bg-green-500 text-white">Registrarse</button>
+          <button onClick={() => setShowLogin(true)} className="px-3 py-1 rounded bg-blue-500 text-white">Iniciar sesión</button>
+        </div>
+
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4 sm:mb-6">
             <div className="flex-1">
               <SearchBar searchTerm={search} onSearchChange={setSearch} />
@@ -119,6 +127,9 @@ function App() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
+
+      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} onSuccess={() => window.location.reload()} />
+      <RegisterModal isOpen={showRegister} onClose={() => setShowRegister(false)} />
     </div>
   );
 }

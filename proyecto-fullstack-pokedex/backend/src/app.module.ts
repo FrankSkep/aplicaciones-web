@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PokemonsModule } from './pokemons/pokemons.module';
+import { FavoritosModule } from './favoritos/favoritos.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { PokemonsModule } from './pokemons/pokemons.module';
         }),
     AuthModule,
     PokemonsModule,
+    FavoritosModule,
     ],
     controllers: [],
     providers: [],
