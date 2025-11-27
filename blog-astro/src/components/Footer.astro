@@ -1,0 +1,48 @@
+<footer class="site-footer">
+  <div class="container">
+    <p class="copy">© 2024 Proyecto Astro. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: linear-gradient(90deg, rgba(17,24,39,0.98), rgba(10,12,22,0.94));
+    color: #e6eef8;
+    padding: 1.25rem 1rem;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 -8px 30px rgba(2,6,23,0.6);
+  }
+
+  .site-footer .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .site-footer .copy {
+    margin: 0;
+    text-align: center;
+    font-size: 0.98rem;
+    color: #cbd5e1;
+    letter-spacing: 0.01em;
+  }
+
+  /* small accent line above the footer to match header accent */
+  .site-footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 64px;
+    margin: 0 auto 10px auto;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 720px) {
+    .site-footer .copy { font-size: 0.95rem; }
+  }
+</style>

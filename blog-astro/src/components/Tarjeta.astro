@@ -1,0 +1,56 @@
+---
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  destacada?: boolean;
+  tags?: string[];
+}
+
+const {
+  titulo,
+  descripcion,
+  imagen = "/default.jpg",
+  destacada = false,
+  tags = [],
+} = Astro.props;
+---
+
+<div class:list={["tarjeta", { destacada }]}>
+    <img src={imagen} alt={titulo}>
+    <h3>{titulo}</h3>
+    <p>{descripcion}</p>
+    {tags.length > 0 && (
+      <div class="tags">
+        {tags.map(tag => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+</div>
+
+<style>
+  .tarjeta {
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 8px 28px rgba(2,6,23,0.5);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+    border: 1px solid rgba(255,255,255,0.03);
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+    gap: .6rem;
+  }
+
+  .tarjeta:hover { transform: translateY(-8px); box-shadow: 0 22px 48px rgba(2,6,23,0.6); }
+
+  .tarjeta img { width:100%; height:160px; object-fit:cover; border-radius:8px; filter: saturate(0.98) contrast(0.98); }
+
+  .tarjeta h3 { margin:0; font-size:1.1rem; color:#e6eef8; }
+
+  .tarjeta p { margin:0; color:#9aa4b2; font-size:0.95rem; }
+
+  .tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.5rem; }
+  .tag { background: rgba(255,255,255,0.04); color:#dbeafe; padding:4px 8px; border-radius:999px; font-size:0.8rem; }
+
+  .destacada { border: 1px solid rgba(124,58,237,0.18); box-shadow: 0 14px 40px rgba(124,58,237,0.06); }
+</style>

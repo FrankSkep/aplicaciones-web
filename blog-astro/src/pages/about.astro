@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="About" description="Página sobre nosotros">
+  <section class="about-hero">
+    <div class="inner">
+      <h1>Sobre Nosotros</h1>
+      <p class="lead">En <strong>Blog sobre Astro</strong> nos apasiona ayudar a desarrolladores a crear sitios rápidos y accesibles con las mejores prácticas modernas.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Nuestra Misión</h3>
+          <p>Compartir conocimiento y herramientas para construir experiencias web rápidas, accesibles y escalables con Astro.</p>
+        </div>
+
+        <div class="card">
+          <h3>Nuestros Valores</h3>
+          <ul>
+            <li>Innovación</li>
+            <li>Rendimiento</li>
+            <li>Colaboración</li>
+            <li>Calidad</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Nuestro Equipo</h3>
+          <p>Un pequeño grupo de desarrolladores y creadores de contenido, unidos por la pasión por la web.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    :root { --accent: #7c3aed; --muted: #9aa4b2; --surface: #0b1220; --glass: rgba(255,255,255,0.03); }
+    .about-hero { max-width: 1100px; margin: 2.5rem auto; padding: 1rem; }
+    .about-hero .inner { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); padding: 2rem; border-radius: 14px; box-shadow: 0 12px 36px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03); }
+    .about-hero h1 { text-align:center; margin:0 0 .5rem 0; font-size:2rem; color:#e6eef8; }
+    .about-hero .lead { text-align:center; color:var(--muted); max-width:70ch; margin:0 auto 1.25rem auto; }
+
+    .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; margin-top:1rem; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04)); padding:1.25rem; border-radius:10px; box-shadow: 0 10px 30px rgba(2,6,23,0.5); transition: transform .18s ease, box-shadow .18s ease; border:1px solid rgba(255,255,255,0.03); }
+    .card h3 { margin:0 0 .5rem 0; color:#f3f7fb; }
+    .card p, .card ul { color:var(--muted); margin:0; }
+    .card ul { padding-left:1rem; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,6,23,0.6); }
+
+    @media (max-width: 720px) {
+      .about-hero .inner { padding:1rem; }
+      .about-hero h1 { font-size:1.6rem; }
+    }
+  </style>
+</Layout>

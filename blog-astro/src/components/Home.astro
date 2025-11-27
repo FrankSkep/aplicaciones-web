@@ -1,0 +1,206 @@
+---
+import Contador from '../components/Contador.tsx';
+import Tarjeta from './svelte/Tarjeta.svelte';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const latest = posts.sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+---
+<main class="home">
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Bienvenido a <span class="brand">Blog sobre Astro</span></h1>
+      <p class="lede">Sitios web rápidos, modernos y con excelente experiencia de usuario usando Astro.</p>
+      <div class="ctas">
+        <a class="btn primary" href="/blog">Leer el blog</a>
+        <a class="btn ghost" href="/about">Sobre mí</a>
+      </div>
+    </div>
+    
+    <div class="hero-visual" aria-hidden="true">
+      <div class="card">
+        <h3>¿Qué es Astro?</h3>
+        <p><strong>Astro</strong> es un framework moderno para construir sitios rápidos y eficientes, combinando componentes de distintos frameworks sin sacrificar rendimiento.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Por qué elegir Astro</h2>
+    <div class="feature-grid">
+      <article class="feature">
+        <h3>Rendimiento</h3>
+        <p>Entrega solo lo necesario al navegador para velocidades excelentes.</p>
+      </article>
+      <article class="feature">
+        <h3>Flexibilidad</h3>
+        <p>Usa componentes de React, Vue o Svelte cuando los necesites.</p>
+      </article>
+      <article class="feature">
+        <h3>Desarrollo feliz</h3>
+        <p>Herramientas modernas y flujo de trabajo sencillo.</p>
+      </article>
+    </div>
+  </section>
+  
+  <section class="latest">
+    <h2>Últimos posts</h2>
+    <div class="post-grid">
+      {latest.map((post) => (
+        <Tarjeta
+        client:visible
+        title={post.data.title}
+        excerpt={post.data.description}
+        date={post.data.date.toISOString()}
+        href={`/blog/${post.slug}`}
+          image={post.data.image}
+          />
+        ))}
+    </div>
+  </section>
+  <Contador client:visible />
+  
+</main>
+
+<style>
+:root {
+  --bg: linear-gradient(180deg, #0f172a 0%, #071024 100%);
+  --card: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.04);
+  --accent: #7c3aed;
+  --muted: #cbd5e1;
+  --radius: 14px;
+  --max-width: 1100px;
+  --ff: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+}
+
+.home {
+  min-height: 80vh;
+  color: white;
+  background: var(--bg);
+  font-family: var(--ff);
+  padding: 4rem 1rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.hero {
+  width:100%;
+  max-width: var(--max-width);
+  display:grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items:center;
+  margin-bottom: 3rem;
+}
+
+.hero-inner h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  line-height:1.05;
+  margin:0 0 .6rem 0;
+  letter-spacing: -0.02em;
+}
+
+.brand {
+  background: linear-gradient(90deg, #fff, #c4b5fd 50%, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight:700;
+}
+
+.lede {
+  color: var(--muted);
+  max-width: 60ch;
+  margin-bottom:1rem;
+}
+
+.ctas {
+  display:flex;
+  gap: .75rem;
+  margin-top:1rem;
+}
+
+.btn {
+  padding:.6rem .95rem;
+  border-radius: 10px;
+  text-decoration:none;
+  font-weight:600;
+  display:inline-block;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.5);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.btn:hover { transform: translateY(-3px); }
+
+.btn.primary {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  color: white;
+  border: none;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.hero-visual .card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: var(--radius);
+  padding:1.2rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.hero-visual .card h3 {
+  margin:0 0 .5rem 0;
+}
+
+.features {
+  width:100%;
+  max-width: var(--max-width);
+  padding: 1.5rem;
+  background: transparent;
+}
+
+.features h2 {
+  color: #e6eef8;
+  margin:0 0 1rem 0;
+}
+
+.feature-grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:1rem;
+}
+
+.latest { width:100%; max-width: var(--max-width); margin: 1.5rem 0 2.5rem; }
+.post-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:1rem; }
+
+.feature {
+  background: var(--card);
+  border-radius: 12px;
+  padding:1rem;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.feature h3 {
+  margin:0 0 .5rem 0;
+  color: #f8fafc;
+}
+
+.feature p {
+  margin:0;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; text-align:center; }
+  .hero-visual { order: -1; }
+  .feature-grid { grid-template-columns: 1fr; }
+}
+</style>
